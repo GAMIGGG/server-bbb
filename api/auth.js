@@ -2,10 +2,10 @@ const { Client } = require('pg');
 
 export default async function handler(req, res) {
     // Configuración con tu enlace directo a CockroachDB
-    const client = new Client({
-        connectionString: "postgresql://DUQbdff_9SrVDgBNj2mziw@hearty-sphinx-14305.jxf.gcp-us-east1.cockroachlabs.cloud:26257/loligg?sslmode=require",
-        ssl: { rejectUnauthorized: false }
-    });
+   const client = new Client({
+    connectionString: "postgresql://duqbdff_9srvdgbnj2mziw:xsyfN-COo6uxXZTA1JvC6g@hearty-sphinx-14305.jxf.gcp-us-east1.cockroachlabs.cloud:26257/loligg?sslmode=require",
+    ssl: { rejectUnauthorized: false }
+});
 
     try {
         await client.connect();

@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     connectionString: "postgresql://duqbdff_9srvdgbnj2mziw:xsyfN-COo6uxXZTA1JvC6g@hearty-sphinx-14305.jxf.gcp-us-east1.cockroachlabs.cloud:26257/loligg?sslmode=require",
     ssl: { rejectUnauthorized: false }
 });
-
+    
     try {
         await client.connect();
         

@@ -1,24 +1,19 @@
-export default async function handler(req, res) {
-    // 1. Solo aceptamos POST
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Método no permitido' });
-    }
+        export default async function handler(req, res) {
+    if (req.method !== 'POST') return res.status(405).json({ error: 'Método no permitido' });
 
     const { version_cliente } = req.body;
-    const url = process.env.TURSO_URL;
+    let url = process.env.TURSO_URL;
     const token = process.env.TURSO_TOKEN;
 
-    // 2. Verificamos que las llaves existan
-    if (!url || !token) {
-        return res.status(500).json({ error: "Faltan variables de entorno en Vercel" });
-    }
+    if (!url || !token) return res.status(500).json({ error: "Faltan variables de entorno" });
 
-    // Limpiamos la URL por si tiene libsql://
-    const url_limpia = url.replace("libsql://", "https://");
+    // Limpieza total de la URL
+    url = url.replace("libsql://", "https://");
+    if (url.endsWith('/')) url = url.slice(0, -1); // Quita la barra final si existe
 
     try {
-        // 3. Petición directa a la API de Turso (sin librerías raras)
-        const response = await fetch(`${url_limpia}/v2/pipeline`, {
+        // Ahora la URL será: https://tu-db.turso.io/v2/pipeline
+        const response = await fetch(`${url}/v2/pipeline`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -36,19 +31,17 @@ export default async function handler(req, res) {
 
         const data = await response.json();
         
-        // Extraemos el valor de la base de datos
+        // Si Turso responde con error
+        if (data.error) return res.status(500).json({ error: "Error de Turso", detalle: data.error });
+
         const v_server = data.results[0].response.result.rows[0][0].value;
 
         if (version_cliente === v_server) {
             return res.status(200).json({ status: "ok", message: "Versión correcta" });
         } else {
-            return res.status(403).json({ 
-                status: "update_required", 
-                server_version: v_server 
-            });
+            return res.status(403).json({ status: "update_required", server_version: v_server });
         }
     } catch (error) {
-        console.error("Error detallado:", error);
-        return res.status(500).json({ error: "Error de conexión con Turso", detalle: error.message });
+        return res.status(500).json({ error: "Fallo de conexión", detalle: error.message });
     }
 }

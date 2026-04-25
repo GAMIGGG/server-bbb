@@ -1,11 +1,7 @@
 {
-  "name": "gamogaming-api",
+  "name": "server-bbb",
   "version": "1.0.0",
-  "description": "API para conexión segura de Godot con Turso",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
+  "type": "module",
   "dependencies": {
     "@libsql/client": "^0.6.0"
   }

@@ -1,7 +1,0 @@
-{
-  "version": 2,
-  "env": {
-    "TURSO_URL": "https://gamer-gamiggg.aws-us-west-2.turso.io",
-    "TURSO_TOKEN": "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3NzcxNTA3MDAsImlkIjoiMDE5ZGMyZTAtZmEwMS03MzIwLWJkZDQtNTBiMDExNTYyYWVmIiwicmlkIjoiZDZmMzY5YWQtODFmMS00ZTdkLWE2MjctODUzYzMxZjRmYzRlIn0.Ttbu2Ofln0qKew8qRFF8sUinJUCrdYy2LqI6bn0HxvZ2V3P75B-40BGHujx3AzlY4Szq-aJOXYAFe4oDBIgqCQ"
-  }
-}

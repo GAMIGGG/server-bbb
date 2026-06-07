@@ -11,7 +11,7 @@ module.exports = (req, res) => {
   }
 
   // Versión oficial mínima requerida para jugar la Beta
-  const VERSION_OFICIAL = "1.0.0";
+  const VERSION_OFICIAL = "1.0.1";
 
   // Si es un POST, podemos recibir la versión que el cliente dice tener y compararla aquí mismo
   if (req.method === 'POST') {

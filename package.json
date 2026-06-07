@@ -1,0 +1,8 @@
+{
+  "name": "king-manager-backend-version",
+  "version": "1.0.0",
+  "description": "Validación de versión para la beta de King Manager",
+  "main": "api/version.js",
+  "dependencies": {},
+  "devDependencies": {}
+}

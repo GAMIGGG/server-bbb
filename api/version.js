@@ -1,45 +1,25 @@
-// API Serverless para verificar la versión de la beta del juego
+
 module.exports = (req, res) => {
-  // Configurar cabeceras CORS para que Godot pueda hacer peticiones desde cualquier lado
+  // 1. Configurar cabeceras CORS para que Godot se conecte desde PC, Android o Web sin bloqueos
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
 
+  // Si el navegador o Godot hace una petición de control (OPTIONS), respondemos OK de inmediato
   if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
+    return res.status(200).end();
   }
 
-  // Versión oficial mínima requerida para jugar la Beta
-  const VERSION_OFICIAL = "1.0.1";
+  // 2. LA CONFIGURACIÓN DE TU BETA (Modifica esto cuando actualices tu juego)
+  const VERSION_OFICIAL = "1.0.0"; 
+  const ESTADO_SERVIDOR = "online"; // Puede ser "online" o "maintenance" (mantenimiento)
 
-  // Si es un POST, podemos recibir la versión que el cliente dice tener y compararla aquí mismo
-  if (req.method === 'POST') {
-    const { version } = req.body || {};
-    
-    if (!version) {
-      return res.status(400).json({ error: "Falta el parámetro 'version' en el cuerpo de la petición." });
-    }
-
-    if (version === VERSION_OFICIAL) {
-      return res.status(200).json({ 
-        valido: true, 
-        mensaje: "Versión correcta. Acceso concedido a la Beta.",
-        version_oficial: VERSION_OFICIAL 
-      });
-    } else {
-      return res.status(403).json({ 
-        valido: false, 
-        mensaje: `Tu versión (${version}) no es válida o está obsoleta. Descarga la versión oficial ${VERSION_OFICIAL}.`,
-        version_oficial: VERSION_OFICIAL 
-      });
-    }
-  }
-
-  // Si es un GET simple, solo devolvemos cuál es la versión oficial actual
+  // 3. RESPUESTA DEL SERVIDOR
+  // Devolvemos un JSON completo con la versión, el estado y la hora exacta del servidor en UTC
   return res.status(200).json({
     version_oficial: VERSION_OFICIAL,
-    estado_servidores: "online",
-    notas_parche: "Beta inicial - Mecánicas base listas."
+    estado_servidores: ESTADO_SERVIDOR,
+    hora_servidor: Date.now(), // Devuelve la hora en milisegundos (Evita trampas de tiempo en el cliente)
+    notas_parche: "Beta Inicial de King Manager - Conexión y seguridad base listas."
   });
 };
